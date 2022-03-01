@@ -1,18 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <generic-select @onSelected="setName" :options="names" selectName="names" selectId="names"/>
+    <generic-select @onSelected="setSurname" :options="surnames" selectName="surnames" selectId="surnames"/>
+    <button :disabled="validateDisableButton" @click="alertUser">Aceptar</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GenericSelect from './components/GenericSelect.vue'
 
 export default {
   name: 'App',
+
   components: {
-    HelloWorld
-  }
+    GenericSelect
+  },
+
+  data () {
+    return {
+      names: [ 'Leonardo', 'Julia', 'Carla', 'Tom' ],
+      surnames: [ 'Scamozo', 'Gomez', 'Di Nardi' ],
+      nameSelected: null,
+      surnameSelected: null
+    }
+  },
+
+  methods: {
+    alertUser(){
+      alert('¡Se clickeó!')
+    },
+
+    setName(name){
+      console.log(name);
+      this.nameSelected = name
+    },
+
+    setSurname(surname){
+      this.surnameSelected = surname
+    }
+  },
+
+  computed: {
+    validateDisableButton() {
+      return !((this.nameSelected != null) && (this.surnameSelected != null))
+    }
+  },
+
 }
 </script>
 
